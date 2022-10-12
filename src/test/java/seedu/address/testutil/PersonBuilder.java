@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
-import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
@@ -21,7 +20,6 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_DOB = "1/1/2000";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
     public static final String DEFAULT_GENDER = "NA";
@@ -29,7 +27,6 @@ public class PersonBuilder {
     private Name name;
     private Phone phone;
     private Email email;
-    private DateOfBirth dob;
     private Address address;
     private Set<Tag> tags;
 
@@ -42,7 +39,6 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        dob = new DateOfBirth(DEFAULT_DOB);
         address = new Address(DEFAULT_ADDRESS);
         gender = new Gender(DEFAULT_GENDER);
         tags = new HashSet<>();
@@ -55,7 +51,6 @@ public class PersonBuilder {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
-        dob = personToCopy.getDob();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
         gender = personToCopy.getGender();
@@ -109,16 +104,8 @@ public class PersonBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code DateOfBirth} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withDob(String dob) {
-        this.dob = new DateOfBirth(dob);
-        return this;
-    }
-
     public Person build() {
-        return new Person(name, phone, email, dob, address, tags, gender);
+        return new Person(name, phone, email, address, tags, gender);
     }
 
 }
