@@ -24,6 +24,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String EMPTY_ARGUMENT = "NA";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -99,6 +100,9 @@ public class ParserUtil {
         String trimmedDob = dob.trim();
         if (!DateOfBirth.isValidDateOfBirth(dob, isNaAllowed)) {
             throw new ParseException(DateOfBirth.MESSAGE_CONSTRAINTS);
+        }
+        if (dob.equals(EMPTY_ARGUMENT) & isNaAllowed) {
+            return DateOfBirth.getEmptyDateOfBirth();
         }
         return new DateOfBirth(trimmedDob);
     }
