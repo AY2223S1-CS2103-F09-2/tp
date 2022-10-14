@@ -42,7 +42,7 @@ public class DateOfBirth {
     /**
      * Constructs an {@code DateOfBirth}.
      *
-     * @param date A valid date.
+     * @param date A valid date of birth.
      */
     public DateOfBirth(String date) {
         requireNonNull(date);
@@ -52,14 +52,14 @@ public class DateOfBirth {
     }
 
     /**
-     * Constructs an empty {@code DateOfBirth}.
+     * Returns an empty {@code DateOfBirth}.
      */
     public static DateOfBirth getEmptyDateOfBirth() {
         return new DateOfBirth();
     }
 
     /**
-     * Returns true if a given string is a valid DOB input, null is used to represent an empty DateOfBirth.
+     * Returns true if a given string is a valid DOB input, null is used to represent an empty DateOfBirth value.
      * @return boolean
      */
 
@@ -81,11 +81,9 @@ public class DateOfBirth {
 
 
     /**
-     * Overloaded method to default "NA" value as not a allowed date of birth format
+     * Overloaded method to default "NA" value as not an allowed date of birth format
      * @return boolean
      */
-
-    //found from https://mkyong.com/java/how-to-check-if-date-is-valid-in-java/
     public static boolean isValidDateOfBirth(String test) {
         return isValidDateOfBirth(test, Boolean.FALSE);
     }

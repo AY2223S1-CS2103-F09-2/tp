@@ -108,7 +108,7 @@ public class ParserUtil {
     }
 
     /**
-     * Overloaded parseDob to default to not allowing "NA"
+     * Overloaded {@code parseDob} to default to not allowing "NA"
      * as a date of birth format
      *
      * @throws ParseException if the given {@code dob} is invalid.
