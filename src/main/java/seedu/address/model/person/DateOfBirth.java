@@ -59,13 +59,16 @@ public class DateOfBirth {
     }
 
     /**
-     * Returns true if a given string is a valid DOB input, "" empty string is used to represent an empty DateOfBirth.
+     * Returns true if a given string is a valid DOB input, null is used to represent an empty DateOfBirth.
      * @return boolean
      */
 
     //found from https://mkyong.com/java/how-to-check-if-date-is-valid-in-java/
-    public static boolean isValidDateOfBirth(String test) {
+    public static boolean isValidDateOfBirth(String test, boolean isNaAllowed) {
         if (test == null) {
+            return true;
+        }
+        if (test.equals("NA") & isNaAllowed) {
             return true;
         }
         try {
@@ -75,6 +78,18 @@ public class DateOfBirth {
         }
         return true;
     }
+
+
+    /**
+     * Overloaded method to default "NA" value as not a allowed date of birth format
+     * @return boolean
+     */
+
+    //found from https://mkyong.com/java/how-to-check-if-date-is-valid-in-java/
+    public static boolean isValidDateOfBirth(String test) {
+        return isValidDateOfBirth(test, Boolean.FALSE);
+    }
+
 
     /**
      * Returns 1 if the other object is a DateOfBirth that is later,

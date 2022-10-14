@@ -93,13 +93,24 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code dob} is invalid.
      */
-    public static DateOfBirth parseDob(String dob) throws ParseException {
+    public static DateOfBirth parseDob(String dob, boolean isNaAllowed) throws ParseException {
         requireNonNull(dob);
+        requireNonNull(isNaAllowed);
         String trimmedDob = dob.trim();
-        if (!DateOfBirth.isValidDateOfBirth(dob)) {
+        if (!DateOfBirth.isValidDateOfBirth(dob, isNaAllowed)) {
             throw new ParseException(DateOfBirth.MESSAGE_CONSTRAINTS);
         }
         return new DateOfBirth(trimmedDob);
+    }
+
+    /**
+     * Overloaded parseDob to default to not allowing "NA"
+     * as a date of birth format
+     *
+     * @throws ParseException if the given {@code dob} is invalid.
+     */
+    public static DateOfBirth parseDob(String dob) throws ParseException {
+        return parseDob(dob, Boolean.FALSE);
     }
 
     /**
