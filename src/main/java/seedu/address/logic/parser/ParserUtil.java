@@ -17,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.SortField;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.person.DateOfBirth;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -24,7 +25,6 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String EMPTY_ARGUMENT = "NA";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -101,10 +101,7 @@ public class ParserUtil {
         if (!DateOfBirth.isValidDateOfBirth(dob, isNaAllowed)) {
             throw new ParseException(DateOfBirth.MESSAGE_CONSTRAINTS);
         }
-        if (dob.equals(EMPTY_ARGUMENT) & isNaAllowed) {
-            return DateOfBirth.getEmptyDateOfBirth();
-        }
-        return new DateOfBirth(trimmedDob);
+        return DateOfBirth.getDateOfBirth(trimmedDob, isNaAllowed);
     }
 
     /**

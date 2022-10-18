@@ -187,7 +187,7 @@ __Optional Parameter 2: Date of Birth__
 
 Format: `edit INDEX [d/DOB]`
 
-- Edits the date of birth of a person in the contact list. Date format accepted is: dd/mm/yyyy, entering "NA" will remove the existing date of birth.
+- Edits the date of birth of a person in the contact list. Date format accepted is: dd/mm/yyyy, entering `NA` will remove the existing date of birth.
 - `INDEX` must be **a positive integer** (i.e 1,2,3…)
 - `INDEX` must be within the range of the contact list index (i.e. from 1 to size of contact list).
 
@@ -195,7 +195,7 @@ Format: `edit INDEX [d/DOB]`
 Examples:
 * `edit 1 d/20/03/2000`
 * `edit 2 d/5/4/2000`
-* `edit 3 NA`
+* `edit 3 d/NA`
 
 ### Locating persons by name: `find`
 

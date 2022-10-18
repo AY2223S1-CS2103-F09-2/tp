@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,6 +14,7 @@ import java.time.format.DateTimeParseException;
  */
 public class DateOfBirth {
 
+    public static final String EMPTY_DOB = "NA";
     public static final String MESSAGE_CONSTRAINTS = "Date of birth must be in format: dd/mm/yyyy";
     private static final String MESSAGE_ARGUMENT_CONSTRAINTS =
         "compareTo() of DateOfBirth must take in argument of type LocalDate";
@@ -30,6 +32,21 @@ public class DateOfBirth {
     public final LocalDate date;
 
     private boolean isEmpty;
+
+    /**
+     * Takes in the {@code DateOfBirth} argument as well as a boolean to signify if "NA" can be taken as an argument
+     * to return an empty {@code DateOfBirth}, returns a newly constructed {@code DateOfBirth} with the arguments given.
+     * @param dob
+     * @param isNaAllowed
+     * @return DateOfBirth
+     */
+    public static DateOfBirth getDateOfBirth(String dob, boolean isNaAllowed) {
+        if (isNaAllowed & dob.equals("NA")) {
+            return DateOfBirth.getEmptyDateOfBirth();
+        } else {
+            return new DateOfBirth(dob);
+        }
+    }
 
     /**
      * Constructs an empty {@code DateOfBirth}.
