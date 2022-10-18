@@ -11,12 +11,10 @@ import java.time.format.DateTimeParseException;
  * Represents a Person's date of birth in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
-public class DateOfBirth {
+public class DateOfBirth implements Comparable<DateOfBirth> {
 
     public static final String EMPTY_DOB = "NA";
     public static final String MESSAGE_CONSTRAINTS = "Date of birth must be in format: dd/mm/yyyy";
-    private static final String MESSAGE_ARGUMENT_CONSTRAINTS =
-        "compareTo() of DateOfBirth must take in argument of type LocalDate";
 
     //for checking if valid input date format
     private static final DateTimeFormatter checkFormatter = DateTimeFormatter
@@ -28,9 +26,10 @@ public class DateOfBirth {
     //for changing to user-readable format
     private static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
 
-    public final LocalDate date;
 
+    public final LocalDate date;
     private boolean isEmpty;
+
 
     /**
      * Constructs an empty {@code DateOfBirth}.
@@ -52,6 +51,13 @@ public class DateOfBirth {
         this.isEmpty = false;
     }
 
+    /**
+     * Returns true if DateOfBirth is empty, false otherwise.
+     * @return boolean
+     */
+    public boolean isEmpty() {
+        return this.isEmpty;
+    }
 
     /**
      * Takes in the {@code DateOfBirth} argument as well as a boolean to signify if "NA" can be taken as an argument
@@ -76,7 +82,8 @@ public class DateOfBirth {
     }
 
     /**
-     * Returns true if a given string is a valid DOB input, null is used to represent an empty DateOfBirth value.
+     * Returns true if a given string is a valid DOB input.
+     * {@code null} is used to represent an empty DateOfBirth value.
      * @return boolean
      */
 
@@ -106,32 +113,9 @@ public class DateOfBirth {
     }
 
 
-    /**
-     * Returns 1 if the other object is a DateOfBirth that is later,
-     * -1 if the other object is a DateOfBirth that is earlier,
-     * and 0 if the other object is a DateOfBirth that is of the same date .
-     * @param other The object to compare with
-     * @return int
-     */
-    public int compareTo(Object other) {
-        if (other == null) {
-            return -1;
-        }
-        if (!(other instanceof DateOfBirth)) {
-            throw new IllegalArgumentException(MESSAGE_ARGUMENT_CONSTRAINTS);
-        }
-        if (this.isEmpty() & ((DateOfBirth) other).isEmpty()) {
-            return 0;
-        }
-        return this.date.compareTo(((DateOfBirth) other).date);
-    }
-
-    /**
-     * Returns true if DateOfBirth is empty, false otherwise
-     * @return boolean
-     */
-    public boolean isEmpty() {
-        return this.isEmpty;
+    @Override
+    public int compareTo(DateOfBirth d) {
+        return this.date.compareTo(d.date);
     }
 
     /**
@@ -146,22 +130,30 @@ public class DateOfBirth {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof DateOfBirth)) {
-            throw new IllegalArgumentException(MESSAGE_ARGUMENT_CONSTRAINTS);
-        }
-        if (this.isEmpty() & ((DateOfBirth) other).isEmpty()) {
-            return true;
-        }
-        return this.date.equals(((DateOfBirth) other).date);
-    }
-
-    @Override
     public String toString() {
         if (this.isEmpty()) {
             return "";
         }
         return this.date.format(outputFormatter);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof DateOfBirth)) {
+            return false;
+        }
+
+        // state check
+        DateOfBirth d = (DateOfBirth) other;
+
+        return this.date.equals(d.date)
+            && this.isEmpty() == d.isEmpty();
     }
 
     @Override
