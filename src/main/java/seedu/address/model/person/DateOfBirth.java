@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -34,21 +33,6 @@ public class DateOfBirth {
     private boolean isEmpty;
 
     /**
-     * Takes in the {@code DateOfBirth} argument as well as a boolean to signify if "NA" can be taken as an argument
-     * to return an empty {@code DateOfBirth}, returns a newly constructed {@code DateOfBirth} with the arguments given.
-     * @param dob
-     * @param isNaAllowed
-     * @return DateOfBirth
-     */
-    public static DateOfBirth getDateOfBirth(String dob, boolean isNaAllowed) {
-        if (isNaAllowed & dob.equals("NA")) {
-            return DateOfBirth.getEmptyDateOfBirth();
-        } else {
-            return new DateOfBirth(dob);
-        }
-    }
-
-    /**
      * Constructs an empty {@code DateOfBirth}.
      */
     private DateOfBirth() {
@@ -66,6 +50,22 @@ public class DateOfBirth {
         checkArgument(isValidDateOfBirth(date), MESSAGE_CONSTRAINTS);
         this.date = LocalDate.parse(date, logFormatter);
         this.isEmpty = false;
+    }
+
+
+    /**
+     * Takes in the {@code DateOfBirth} argument as well as a boolean to signify if "NA" can be taken as an argument
+     * to return an empty {@code DateOfBirth}, returns a newly constructed {@code DateOfBirth} with the arguments given.
+     * @param dob
+     * @param isNaAllowed
+     * @return DateOfBirth
+     */
+    public static DateOfBirth getDateOfBirth(String dob, boolean isNaAllowed) {
+        if (isNaAllowed & dob.equals("NA")) {
+            return DateOfBirth.getEmptyDateOfBirth();
+        } else {
+            return new DateOfBirth(dob);
+        }
     }
 
     /**
