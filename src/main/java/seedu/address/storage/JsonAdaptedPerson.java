@@ -1,11 +1,5 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -17,7 +11,6 @@ import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -31,7 +24,6 @@ class JsonAdaptedPerson {
     private final String email;
     private final String dob;
     private final String address;
-    private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     private final String gender;
 
@@ -42,15 +34,12 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email,
             @JsonProperty("dob") String dob, @JsonProperty("address") String address,
-            @JsonProperty("tagged") List<JsonAdaptedTag> tagged, @JsonProperty("gender") String gender) {
+            @JsonProperty("gender") String gender) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.dob = dob;
         this.address = address;
-        if (tagged != null) {
-            this.tagged.addAll(tagged);
-        }
         this.gender = gender;
     }
 
@@ -63,9 +52,6 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         dob = source.getDob().toLogFormat();
         address = source.getAddress().value;
-        tagged.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
         gender = source.getGender().value.toString();
     }
 
@@ -75,11 +61,6 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
-
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -133,8 +114,7 @@ class JsonAdaptedPerson {
             modelGender = new Gender(gender);
         }
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelDob, modelAddress, modelTags, modelGender);
+        return new Person(modelName, modelPhone, modelEmail, modelDob, modelAddress, modelGender);
     }
 
 }

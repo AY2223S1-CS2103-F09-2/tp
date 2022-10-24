@@ -7,14 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -28,7 +24,6 @@ import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -45,7 +40,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG] "
             + "[" + PREFIX_GENDER + "GENDER]"
             + "[" + PREFIX_DOB + "DATE OF BIRTH] ...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -105,10 +99,9 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         DateOfBirth updatedDob = editPersonDescriptor.getDob().orElse(personToEdit.getDob());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Gender updatedGender = editPersonDescriptor.getGender().orElse(personToEdit.getGender());
         return new Person(updatedName, updatedPhone, updatedEmail,
-             updatedDob, updatedAddress, updatedTags, updatedGender);
+             updatedDob, updatedAddress, updatedGender);
     }
 
     @Override
@@ -139,7 +132,6 @@ public class EditCommand extends Command {
         private Email email;
         private DateOfBirth dob;
         private Address address;
-        private Set<Tag> tags;
 
         private Gender gender;
 
@@ -147,7 +139,6 @@ public class EditCommand extends Command {
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
@@ -155,7 +146,6 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setDob(toCopy.dob);
             setAddress(toCopy.address);
-            setTags(toCopy.tags);
             setGender(toCopy.gender);
         }
 
@@ -163,7 +153,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, dob, address, tags, gender);
+            return CollectionUtil.isAnyNonNull(name, phone, email, dob, address, gender);
         }
 
         public void setName(Name name) {
@@ -214,23 +204,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(gender);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -251,7 +224,6 @@ public class EditCommand extends Command {
                     && getEmail().equals(e.getEmail())
                     && getDob().equals(e.getDob())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags())
                     && getGender().equals(e.getGender());
         }
     }

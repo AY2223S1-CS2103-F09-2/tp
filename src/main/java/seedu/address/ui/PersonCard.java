@@ -1,10 +1,8 @@
 package seedu.address.ui;
 
-import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Gender;
@@ -42,9 +40,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label dob;
     @FXML
-    private FlowPane tags;
-
-    @FXML
     private Label gender;
 
     /**
@@ -59,9 +54,6 @@ public class PersonCard extends UiPart<Region> {
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         dob.setText(person.getDob().toString());
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (Gender.isValidGender(person.getGender(), Boolean.FALSE)) { // invalid gender (NA is considered invalid)
             gender.setManaged(true); //Show label
             gender.setText(person.getGender().value.toString());

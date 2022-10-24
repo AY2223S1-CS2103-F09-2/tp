@@ -2,12 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Person in the address book.
@@ -24,19 +19,17 @@ public class Person {
     // Data fields
     private final Address address;
     private final Gender gender; // add gender attribute for person
-    private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Overloaded constructor that takes in optional parameter gender
      */
-    public Person(Name name, Phone phone, Email email, DateOfBirth dob, Address address, Set<Tag> tags, Gender gender) {
-        requireAllNonNull(name, phone, email, address, tags, gender);
+    public Person(Name name, Phone phone, Email email, DateOfBirth dob, Address address, Gender gender) {
+        requireAllNonNull(name, phone, email, address, gender);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.dob = dob;
         this.address = address;
-        this.tags.addAll(tags);
         this.gender = gender;
     }
 
@@ -44,14 +37,13 @@ public class Person {
      * Every field must be present and not null.
      * Gender field is added at the end of each method.
      */
-    public Person(Name name, Phone phone, Email email, DateOfBirth dob, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, DateOfBirth dob, Address address) {
+        requireAllNonNull(name, phone, email, address);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.dob = dob;
         this.address = address;
-        this.tags.addAll(tags);
         this.gender = Gender.getNoGender();
     }
 
@@ -77,14 +69,6 @@ public class Person {
 
     public Gender getGender() {
         return gender;
-    }
-
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
     }
 
     /**
@@ -120,14 +104,13 @@ public class Person {
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getDob().equals(getDob())
                 && otherPerson.getAddress().equals(getAddress())
-                && otherPerson.getTags().equals(getTags())
                 && otherPerson.getGender().equals(getGender()); // add gender field for comparison
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, gender); //add gender field
+        return Objects.hash(name, phone, email, address, gender); //add gender field
     }
 
     @Override
@@ -142,12 +125,6 @@ public class Person {
                 .append(getAddress())
                 .append("; Date of birth: ")
                 .append(getDob());
-
-        Set<Tag> tags = getTags();
-        if (!tags.isEmpty()) {
-            builder.append("; Tags: ");
-            tags.forEach(builder::append);
-        }
 
         if (!getGender().equals(Gender.getNoGender())) {
             // add gender field in toString method
