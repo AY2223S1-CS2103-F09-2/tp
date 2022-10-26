@@ -188,11 +188,11 @@ Examples:
 * `edit 2 d/5/4/2000`
 * `edit 3 d/23/09/2000`
 
-### Locating persons by name: `find`
+### Locating persons by name: `findPersons`
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `findPersons KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -202,9 +202,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `findPersons John` returns `john` and `John Doe`
+* `findPersons alex david` returns `Alex Yeoh`, `David Li`<br>
+  ![result for 'findPersons alex david'](images/findAlexDavidResult.png)
 
 ### Deleting a person : `deletePerson`
 
@@ -218,7 +218,7 @@ Format: `deletePerson INDEX`
 
 Examples:
 * `list` followed by `deletePerson 2` deletes the 2nd person in the application.
-* `find Betsy` followed by `deletePerson 1` deletes the 1st person in the results of the `find` command.
+* `findPersons Betsy` followed by `deletePerson 1` deletes the 1st person in the results of the `findPersons` command.
 
 ### Add an event: `addEvent`
 
@@ -326,7 +326,7 @@ _Details coming soon ..._
 | **Clear**        | `clear`                                                                                                                                                                                |
 | **DeletePerson** | `deletePerson INDEX`<br> e.g., `deletePerson 3`                                                                                                                                        |
 | **Edit**         | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [g/GENDER] [d/DOB] [t/TAG]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                                  |
-| **Find**         | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                             |
+| **FindPersons**  | `findPersons KEYWORD [MORE_KEYWORDS]`<br> e.g., `findPersons James Jake`                                                                                                               |
 | **List**         | `list  [s/FIELD]` <br> e.g., `list s/n`                                                                                                                                                |
 | **AddEvent**     | `addEvent n/EVENT_TITLE d/DATE t/TIME p/PURPOSE`<br> e.g.,`addEvent n/Shoe Sale 30% d/30-05-2022 t/11:00 p/Discount on all shoes for up to 30%`                                        |
 | **DeleteEvent**  | `deleteEvent INDEX`<br> e.g., `deleteEvent 2`                                                                                                                                          |
